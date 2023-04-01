@@ -7,7 +7,7 @@
     "dialect": "mysql",
     "port": 3308,
     "logging": false,
-    "define": {"raw": true},
+    "query": {"raw": true},
     "timezone": "+7:00"
   },
   "test": {
