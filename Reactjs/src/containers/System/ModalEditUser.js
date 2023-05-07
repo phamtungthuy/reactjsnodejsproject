@@ -9,6 +9,7 @@ class ModalEditUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             email: '',
             password: '',
             firstName: '',
@@ -34,6 +35,7 @@ class ModalEditUser extends Component {
         let user = this.props.currentUser;
         if(user && !_.isEmpty(user)) {
             this.setState({
+                id: user.id,
                 email: user.email,
                 password: 'hardcode',
                 firstName: user.firstName,
@@ -67,16 +69,16 @@ class ModalEditUser extends Component {
         return isValid;
     }
 
-    handleAddNewUser = () => {
+    handleSaveUser = () => {
         let isValid = this.checkValidInput();
         if(isValid) {
-            this.props.createNewUser(this.state, 'abc');
+            //call api edit user modal
+            this.props.editUser(this.state);
             this.toggle();
         }
     }
 
     render() {
-        console.log('check props from parent: ', this.props);
         return (
             
             <Modal 
@@ -138,8 +140,8 @@ class ModalEditUser extends Component {
             <Button 
             color="primary" 
             className = "px-3" 
-            onClick={this.handleAddNewUser}>
-                Save change
+            onClick={this.handleSaveUser}>
+                Save changes
             </Button>{' '}
             <Button color="secondary" className = "px-3" onClick={this.toggle}>
                 Close

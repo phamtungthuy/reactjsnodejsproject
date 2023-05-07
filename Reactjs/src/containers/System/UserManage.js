@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./UserManage.scss";
-import { getAllUsers, createNewUserService, deleteUserService} from "../../services/userService";
+import { getAllUsers, createNewUserService, deleteUserService, editUserService} from "../../services/userService";
 import ModalUser from "./ModalUser";
 import ModalEditUser  from "./ModalEditUser";
 import {emitter} from "../../utils/emitter";
@@ -88,6 +88,20 @@ class UserManage extends Component {
     })
   }
 
+  doEditUser = async (user) => {
+    try {
+      let res = await editUserService(user);
+      if(res && res.errCode == 0) {
+        this.getAllUsersFromReact();
+      } else {
+        alert(res.errMessage);
+      }
+
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   /** Life cycle
    *  Run component
    * 1. Run construct -> init state
@@ -111,7 +125,7 @@ class UserManage extends Component {
             isOpen={this.state.isOpenModalEditUser}
             toggleFromParent = {this.toggleEditUserModal}
             currentUser = {this.state.userEdit}
-            // createNewUser ={this.createNewUser}
+            editUser ={this.doEditUser}
         ></ModalEditUser> }
         <div className="title text-center">Manage users</div>
         <div className="mx-1">
